@@ -48,34 +48,36 @@ export function ReportGenerator() {
 
   return (
     <div className="space-y-6">
-      <Card className="bg-slate-900/50 border-slate-800 shadow-xl backdrop-blur-sm">
-        <CardHeader className="border-b border-slate-800/50 pb-6">
-          <div className="flex items-center gap-2 mb-1">
-             <Filter className="w-4 h-4 text-teal-400" />
-             <CardTitle className="text-lg">Report Filters</CardTitle>
+      <Card className="bg-card border-border shadow-xl">
+        <CardHeader className="border-b border-border bg-muted/5 py-7 px-8">
+          <div className="flex items-center gap-3 mb-1.5">
+             <div className="p-2 bg-primary/10 rounded-xl border border-primary/20 text-primary">
+                <Filter className="w-5 h-5" />
+             </div>
+             <CardTitle className="text-xl font-black text-foreground uppercase tracking-tight">Report Configuration</CardTitle>
           </div>
-          <CardDescription>Configure the scope of the flood operational report.</CardDescription>
+          <CardDescription className="text-muted-foreground font-bold text-xs uppercase tracking-widest pl-11">Configure the scope of the flood operational situational report.</CardDescription>
         </CardHeader>
-        <CardContent className="pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <Label className="text-slate-400">Date Range (Start)</Label>
+        <CardContent className="pt-10 px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Date Range (Start)</Label>
               <Popover>
                 <PopoverTrigger
                   render={
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-normal bg-slate-950/50 border-slate-800",
+                        "w-full h-11 justify-start text-left font-bold bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all",
                         !startDate && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="mr-3 h-4 w-4 text-primary" />
                       {startDate ? format(startDate, "PPP") : <span>Pick starting date</span>}
                     </Button>
                   }
                 />
-                <PopoverContent className="w-auto p-0 border-slate-800 bg-slate-900" align="start">
+                <PopoverContent className="w-auto p-0 border-border bg-popover rounded-2xl shadow-2xl" align="start">
                   <Calendar
                     mode="single"
                     selected={startDate}
@@ -86,24 +88,24 @@ export function ReportGenerator() {
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-slate-400">Date Range (End)</Label>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Date Range (End)</Label>
               <Popover>
                 <PopoverTrigger
                   render={
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-full justify-start text-left font-normal bg-slate-950/50 border-slate-800",
+                        "w-full h-11 justify-start text-left font-bold bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all",
                         !endDate && "text-muted-foreground"
                       )}
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="mr-3 h-4 w-4 text-primary" />
                       {endDate ? format(endDate, "PPP") : <span>Pick ending date</span>}
                     </Button>
                   }
                 />
-                <PopoverContent className="w-auto p-0 border-slate-800 bg-slate-900" align="start">
+                <PopoverContent className="w-auto p-0 border-border bg-popover rounded-2xl shadow-2xl" align="start">
                   <Calendar
                     mode="single"
                     selected={endDate}
@@ -114,69 +116,69 @@ export function ReportGenerator() {
               </Popover>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-slate-400">LGA Filter</Label>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">LGA Selection</Label>
               <Select value={lga} onValueChange={setLga}>
-                <SelectTrigger className="bg-slate-950/50 border-slate-800">
+                <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="All LGAs" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">All Sokoto LGAs</SelectItem>
+                <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
+                  <SelectItem value="ALL" className="font-bold py-2.5">All Sokoto LGAs</SelectItem>
                   {SOKOTO_LGAS.map(l => (
-                    <SelectItem key={l} value={l}>{l}</SelectItem>
+                    <SelectItem key={l} value={l} className="font-bold py-2.5">{l}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-slate-400">Severity Level</Label>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Severity Threshold</Label>
               <Select value={severity} onValueChange={setSeverity}>
-                <SelectTrigger className="bg-slate-950/50 border-slate-800">
+                <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="Any Severity" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">All Severities</SelectItem>
+                <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
+                  <SelectItem value="ALL" className="font-bold py-2.5">All Severity Levels</SelectItem>
                   {INCIDENT_SEVERITY.map(s => (
-                    <SelectItem key={s} value={s}>{s}</SelectItem>
+                    <SelectItem key={s} value={s} className="font-bold py-2.5">{s}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label className="text-slate-400">Current Phase/Status</Label>
+            <div className="space-y-3">
+              <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Lifecycle Status</Label>
               <Select value={status} onValueChange={setStatus}>
-                <SelectTrigger className="bg-slate-950/50 border-slate-800">
+                <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="Any Status" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="ALL">All Statuses</SelectItem>
+                <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
+                  <SelectItem value="ALL" className="font-bold py-2.5">Any System Status</SelectItem>
                   {INCIDENT_STATUS.map(s => (
-                    <SelectItem key={s} value={s}>{s.replace('_', ' ')}</SelectItem>
+                    <SelectItem key={s} value={s} className="font-bold py-2.5 uppercase text-[10px] tracking-widest">{s.replace('_', ' ')}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
           </div>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 pt-6 border-t border-slate-800">
+          <div className="mt-12 flex flex-col sm:flex-row gap-5 pt-10 border-t border-border">
             <Button 
                 onClick={() => handleGenerate("pdf")} 
                 disabled={isPending}
-                className="flex-1 bg-teal-600 hover:bg-teal-500 text-white gap-2 h-11"
+                className="flex-1 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest gap-3 h-14 rounded-2xl shadow-lg shadow-primary/20 transition-all"
             >
-              {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
-              Generate Official PDF
+              {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileText className="w-5 h-5" />}
+              Export Official PDF Report
             </Button>
             <Button 
                 onClick={() => handleGenerate("csv")} 
                 disabled={isPending}
                 variant="outline"
-                className="flex-1 border-slate-700 bg-slate-800/50 hover:bg-slate-800 gap-2 h-11"
+                className="flex-1 border-border bg-background hover:bg-accent text-foreground font-black uppercase tracking-widest gap-3 h-14 rounded-2xl shadow-sm transition-all"
             >
-              {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileDown className="w-4 h-4" />}
-              Export Data as CSV
+              {isPending ? <Loader2 className="w-5 h-5 animate-spin" /> : <FileDown className="w-5 h-5 text-primary" />}
+              Download Raw Dataset (CSV)
             </Button>
           </div>
         </CardContent>

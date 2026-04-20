@@ -8,11 +8,11 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-slate-950">
+    <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-background">
       {/* Dynamic Background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-blue-600/30 rounded-full blur-[120px] mix-blend-screen opacity-50 animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] bg-teal-500/20 rounded-full blur-[100px] mix-blend-screen opacity-50 animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-1/4 w-[40vw] h-[40vw] bg-blue-500/10 rounded-full blur-[120px] mix-blend-multiply opacity-50 animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-[35vw] h-[35vw] bg-teal-500/10 rounded-full blur-[100px] mix-blend-multiply opacity-50 animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
 
       {/* Content */}

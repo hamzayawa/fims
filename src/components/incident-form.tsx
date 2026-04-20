@@ -79,18 +79,22 @@ export function IncidentForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel>Incident Title</FormLabel>
+              <FormItem className="md:col-span-2 space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Incident Headline</FormLabel>
                 <FormControl>
-                  <Input placeholder="Brief title of the flood incident" {...field} />
+                  <Input 
+                    placeholder="Brief title of the flood incident" 
+                    className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -99,23 +103,23 @@ export function IncidentForm() {
             control={form.control}
             name="lga"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Local Government Area (LGA)</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Local Government Area (LGA)</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold">
                       <SelectValue placeholder="Select an LGA" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
+                  <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
                     {SOKOTO_LGAS.map((lga) => (
-                      <SelectItem key={lga} value={lga}>
+                      <SelectItem key={lga} value={lga} className="font-bold py-2.5">
                         {lga}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -124,22 +128,22 @@ export function IncidentForm() {
             control={form.control}
             name="severity"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Severity Level</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Severity Level</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold">
                       <SelectValue placeholder="Select severity" />
                     </SelectTrigger>
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="LOW">Low</SelectItem>
-                    <SelectItem value="MODERATE">Moderate</SelectItem>
-                    <SelectItem value="HIGH">High</SelectItem>
-                    <SelectItem value="CRITICAL">Critical</SelectItem>
+                  <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
+                    <SelectItem value="LOW" className="font-bold text-emerald-600 focus:bg-emerald-50 focus:text-emerald-700 py-2.5">Low Impact</SelectItem>
+                    <SelectItem value="MODERATE" className="font-bold text-yellow-600 focus:bg-yellow-50 focus:text-yellow-700 py-2.5">Moderate Warning</SelectItem>
+                    <SelectItem value="HIGH" className="font-bold text-orange-600 focus:bg-orange-50 focus:text-orange-700 py-2.5">High Severity</SelectItem>
+                    <SelectItem value="CRITICAL" className="font-bold text-red-600 focus:bg-red-50 focus:text-red-700 py-2.5">Critical Emergency</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -148,13 +152,17 @@ export function IncidentForm() {
             control={form.control}
             name="locationDetails"
             render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel>Specific Location Details</FormLabel>
+              <FormItem className="md:col-span-2 space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Specific Location Details</FormLabel>
                 <FormControl>
-                  <Input placeholder="Village name, street, landmarks..." {...field} />
+                  <Input 
+                    placeholder="Village name, street, landmarks..." 
+                    className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormDescription>Help responders find the exact location.</FormDescription>
-                <FormMessage />
+                <FormDescription className="text-[10px] font-medium text-muted-foreground italic px-1">Help responders find the exact location of the event.</FormDescription>
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -163,16 +171,16 @@ export function IncidentForm() {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="md:col-span-2">
-                <FormLabel>Detailed Description</FormLabel>
+              <FormItem className="md:col-span-2 space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Detailed Situational Description</FormLabel>
                 <FormControl>
                   <Textarea 
-                    placeholder="Describe the situation, water level, blocked roads, etc." 
-                    className="min-h-[120px]"
+                    placeholder="Describe the situation, water level, blocked roads, or infrastructure damage..." 
+                    className="min-h-[140px] bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-medium leading-relaxed"
                     {...field} 
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -181,12 +189,16 @@ export function IncidentForm() {
             control={form.control}
             name="casualties"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Casualties</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Number of Casualties</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input 
+                    type="number" 
+                    className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-black text-destructive"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -195,28 +207,37 @@ export function IncidentForm() {
             control={form.control}
             name="displacedPersons"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Number of Displaced Persons</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Number of Displaced Persons</FormLabel>
                 <FormControl>
-                  <Input type="number" {...field} />
+                  <Input 
+                    type="number" 
+                    className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-black text-primary"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
         </div>
 
-        <div className="flex justify-end gap-3 pt-4 border-t border-slate-800">
+        <div className="flex justify-end items-center gap-4 pt-8 border-t border-border">
           <Button 
             type="button" 
-            variant="outline" 
+            variant="ghost" 
             onClick={() => router.back()}
             disabled={isPending}
+            className="h-12 px-8 font-black uppercase tracking-widest text-[10px] rounded-xl hover:bg-muted"
           >
-            Cancel
+            Discard Report
           </Button>
-          <Button type="submit" disabled={isPending}>
-            {isPending ? "Submitting..." : "Submit Incident Report"}
+          <Button 
+            type="submit" 
+            disabled={isPending} 
+            className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest text-[10px] rounded-xl shadow-lg shadow-primary/20 transition-all gap-2"
+          >
+            {isPending ? "Transmitting..." : "Submit official Incident Report"}
           </Button>
         </div>
       </form>

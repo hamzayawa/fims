@@ -86,48 +86,52 @@ export function ResourceManager({ incidentId, currentDeployments, availableResou
   const activeDeployments = currentDeployments.filter(d => d.status === "ACTIVE");
 
   return (
-    <Card className="bg-slate-900/50 border-slate-800 shadow-xl">
-      <CardHeader className="flex flex-row items-center justify-between border-b border-slate-800 bg-slate-950/20 py-4">
+  return (
+    <Card className="bg-card border-border shadow-xl relative overflow-hidden group">
+      <CardHeader className="flex flex-row items-center justify-between border-b border-border bg-muted/5 py-5 px-6">
         <div>
-          <CardTitle className="text-sm font-bold uppercase tracking-widest flex items-center gap-2">
-            <Layers className="w-4 h-4 text-teal-400" />
-            Resource Deployments
+          <CardTitle className="text-xs font-black text-foreground uppercase tracking-widest flex items-center gap-2">
+            <Layers className="w-4 h-4 text-primary" />
+            Operational Assets
           </CardTitle>
-          <CardDescription className="text-[10px]">Track equipment and assets assigned to this incident.</CardDescription>
+          <CardDescription className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1.5 italic">Track equipment and assets assigned to this incident.</CardDescription>
         </div>
         
         <Popover>
           <PopoverTrigger asChild>
-            <Button size="sm" className="h-8 bg-teal-600 hover:bg-teal-500 gap-1.5 text-[10px]">
+            <Button size="sm" className="h-9 px-4 bg-primary hover:bg-primary/90 gap-2 font-black uppercase tracking-widest text-[10px] rounded-xl shadow-lg shadow-primary/20 transition-all">
               <Plus className="w-3.5 h-3.5" />
               Deploy Asset
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-72 p-0 bg-slate-900 border-slate-800 shadow-2xl z-[100]" align="end">
-            <div className="p-3 border-b border-slate-800">
-                <p className="text-xs font-bold text-slate-100 uppercase tracking-widest">Available Assets</p>
+          <PopoverContent className="w-80 p-0 bg-popover border-border rounded-2xl shadow-2xl z-[100] mt-2" align="end">
+            <div className="p-4 border-b border-border bg-muted/30">
+                <p className="text-[10px] font-black text-foreground uppercase tracking-widest">Available Operations Inventory</p>
             </div>
-            <div className="max-h-60 overflow-auto divide-y divide-slate-800">
+            <div className="max-h-72 overflow-auto divide-y divide-border/50">
                 {availableResources.length === 0 ? (
-                    <div className="p-8 text-center text-xs text-slate-500 italic">No available assets found.</div>
+                    <div className="p-10 text-center space-y-3">
+                        <History className="w-10 h-10 text-muted-foreground mx-auto opacity-20" />
+                        <p className="text-xs text-muted-foreground font-bold italic">No available assets found in regional inventory.</p>
+                    </div>
                 ) : (
                     availableResources.map(res => (
-                        <div key={res.id} className="p-3 flex items-center justify-between group hover:bg-slate-800/30 transition-colors">
-                            <div className="space-y-0.5">
-                                <p className="text-xs font-bold text-slate-200">{res.name}</p>
-                                <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
-                                    {TYPE_ICONS[res.type as keyof typeof TYPE_ICONS]}
-                                    {res.type}
+                        <div key={res.id} className="p-4 flex items-center justify-between group/item hover:bg-primary/[0.03] transition-colors cursor-pointer">
+                            <div className="space-y-1">
+                                <p className="text-sm font-black text-foreground tracking-tight">{res.name}</p>
+                                <div className="flex items-center gap-2 text-[9px] font-black text-muted-foreground uppercase tracking-widest">
+                                    <span className="p-1 bg-muted rounded border border-border">{TYPE_ICONS[res.type as keyof typeof TYPE_ICONS]}</span>
+                                    {res.type.replace('_', ' ')}
                                 </div>
                             </div>
                             <Button 
                                 size="sm" 
-                                variant="ghost"
+                                variant="outline"
                                 disabled={isDeploying}
                                 onClick={() => handleDeploy(res.id)}
-                                className="h-7 w-7 p-0 hover:bg-teal-500/20 hover:text-teal-400"
+                                className="h-9 w-9 p-0 rounded-xl border-border hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-all group-hover/item:scale-110"
                             >
-                                {isDeploying ? <Loader2 className="w-3 h-3 animate-spin"/> : <Navigation className="w-3.5 h-3.5" />}
+                                {isDeploying ? <Loader2 className="w-3.5 h-3.5 animate-spin"/> : <Navigation className="w-4 h-4" />}
                             </Button>
                         </div>
                     ))
@@ -136,28 +140,30 @@ export function ResourceManager({ incidentId, currentDeployments, availableResou
           </PopoverContent>
         </Popover>
       </CardHeader>
-      <CardContent className="pt-4 px-0">
+      <CardContent className="p-0">
         {activeDeployments.length === 0 ? (
-            <div className="p-10 text-center space-y-2">
-                <History className="w-8 h-8 text-slate-700 mx-auto opacity-30" />
-                <p className="text-xs text-slate-500 italic">No active resources deployed for this situation.</p>
+            <div className="p-14 text-center space-y-4">
+                <div className="w-16 h-16 bg-muted/50 rounded-full flex items-center justify-center mx-auto border border-border">
+                    <History className="w-8 h-8 text-muted-foreground opacity-30" />
+                </div>
+                <p className="text-xs text-muted-foreground font-bold italic px-8">No active resources currently deployed for this situational report.</p>
             </div>
         ) : (
-            <div className="divide-y divide-slate-800">
+            <div className="divide-y divide-border">
                 {activeDeployments.map((d) => (
-                    <div key={d.id} className="px-4 py-3 flex items-center justify-between group hover:bg-slate-800/20 transition-colors">
-                        <div className="flex items-start gap-3">
-                            <div className="mt-1 p-2 bg-slate-800 rounded-lg border border-slate-700 text-teal-400">
+                    <div key={d.id} className="px-6 py-5 flex items-center justify-between group hover:bg-emerald-50/[0.03] transition-all">
+                        <div className="flex items-center gap-4">
+                            <div className="w-11 h-11 bg-primary/10 rounded-2xl border border-primary/20 text-primary flex items-center justify-center shadow-sm">
                                 {TYPE_ICONS[d.resource.type as keyof typeof TYPE_ICONS]}
                             </div>
                             <div>
-                                <p className="text-xs font-bold text-slate-200">{d.resource.name}</p>
-                                <div className="flex items-center gap-2 mt-0.5 text-[10px] text-slate-400">
-                                    <span className="font-mono text-slate-500 uppercase">{d.resource.serialNumber || 'S/N: '+d.resource.id.slice(0, 4)}</span>
-                                    <span>•</span>
-                                    <span className="flex items-center gap-1">
-                                        <CheckCircle2 className="w-2.5 h-2.5 text-teal-500" />
-                                        In Operation
+                                <p className="text-sm font-black text-foreground tracking-tight">{d.resource.name}</p>
+                                <div className="flex items-center gap-3 mt-1 text-[9px] font-black">
+                                    <span className="text-muted-foreground uppercase tracking-widest opacity-60">ID: {d.resource.serialNumber || d.resource.id.slice(0, 8)}</span>
+                                    <span className="text-border">|</span>
+                                    <span className="flex items-center gap-1.5 text-emerald-600 uppercase tracking-widest">
+                                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                                        Operational
                                     </span>
                                 </div>
                             </div>
@@ -167,10 +173,10 @@ export function ResourceManager({ incidentId, currentDeployments, availableResou
                             size="sm"
                             disabled={isReturning === d.id}
                             onClick={() => handleReturn(d.id, d.resource.id)}
-                            className="text-slate-500 hover:text-red-400 hover:bg-red-500/10 h-8 gap-1.5"
+                            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 h-10 px-4 rounded-xl gap-2 transition-all border border-transparent hover:border-destructive/20"
                         >
-                            {isReturning === d.id ? <Loader2 className="w-3 h-3 animate-spin"/> : <Trash2 className="w-3.5 h-3.5" />}
-                            <span className="text-[10px] font-bold uppercase">Return</span>
+                            {isReturning === d.id ? <Loader2 className="w-3.5 h-3.5 animate-spin"/> : <Trash2 className="w-4 h-4" />}
+                            <span className="text-[10px] font-black uppercase tracking-widest">Return Asset</span>
                         </Button>
                     </div>
                 ))}

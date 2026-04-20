@@ -26,6 +26,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { SOKOTO_LGAS } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { createAlertAction } from "@/app/actions/alerts";
 import { useState } from "react";
 
@@ -70,42 +71,46 @@ export function AlertForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <div className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+        <div className="space-y-8">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Alert Headline</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Alert Headline</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., Flash Flood Warning: Goronyo Dam Area" {...field} />
+                  <Input 
+                    placeholder="e.g., Flash Flood Warning: Goronyo Dam Area" 
+                    className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold"
+                    {...field} 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <FormField
               control={form.control}
               name="severity"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Severity Level</FormLabel>
+                <FormItem className="space-y-3">
+                  <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Severity Level</FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold">
                         <SelectValue placeholder="Select severity" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="INFO" className="text-blue-400">Information</SelectItem>
-                      <SelectItem value="WARNING" className="text-yellow-500">Warning</SelectItem>
-                      <SelectItem value="CRITICAL" className="text-red-500">Critical / Emergency</SelectItem>
+                    <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
+                      <SelectItem value="INFO" className="font-bold text-blue-600 focus:bg-blue-50 focus:text-blue-700 py-3">Information Broadcast</SelectItem>
+                      <SelectItem value="WARNING" className="font-bold text-yellow-600 focus:bg-yellow-50 focus:text-yellow-700 py-3">Warning Advisory</SelectItem>
+                      <SelectItem value="CRITICAL" className="font-bold text-red-600 focus:bg-red-50 focus:text-red-700 py-3">Critical / Emergency</SelectItem>
                     </SelectContent>
                   </Select>
-                  <FormMessage />
+                  <FormMessage className="text-[10px] font-bold" />
                 </FormItem>
               )}
             />
@@ -114,13 +119,17 @@ export function AlertForm() {
               control={form.control}
               name="expiresAt"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Expiration Date (Optional)</FormLabel>
+                <FormItem className="space-y-3">
+                  <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Expiration Date (Optional)</FormLabel>
                   <FormControl>
-                    <Input type="datetime-local" {...field} className="bg-slate-950" />
+                    <Input 
+                        type="datetime-local" 
+                        {...field} 
+                        className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-bold" 
+                    />
                   </FormControl>
-                  <FormDescription>When the alert will be considered stale.</FormDescription>
-                  <FormMessage />
+                  <FormDescription className="text-[10px] font-medium text-muted-foreground italic px-1">When the alert will be considered stale.</FormDescription>
+                  <FormMessage className="text-[10px] font-bold" />
                 </FormItem>
               )}
             />
@@ -130,16 +139,16 @@ export function AlertForm() {
             control={form.control}
             name="message"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Advisory Content</FormLabel>
+              <FormItem className="space-y-3">
+                <FormLabel className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Advisory Content</FormLabel>
                 <FormControl>
                   <Textarea 
                     placeholder="Provide clear instructions for residents and field agents..." 
-                    className="min-h-[150px] bg-slate-950/50"
+                    className="min-h-[160px] bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-medium leading-relaxed"
                     {...field} 
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
@@ -148,26 +157,30 @@ export function AlertForm() {
             control={form.control}
             name="targetLgas"
             render={() => (
-              <FormItem>
-                <div className="mb-4">
-                  <FormLabel className="text-base text-slate-200">Targeted LGAs</FormLabel>
-                  <FormDescription>Select the Local Government Areas affected by this alert.</FormDescription>
+              <FormItem className="space-y-5">
+                <div className="px-1">
+                  <FormLabel className="text-sm font-black text-foreground uppercase tracking-tight">Affected Regional Zones (LGAs)</FormLabel>
+                  <FormDescription className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1 italic">Select one or more Local Government Areas intended for this broadcast.</FormDescription>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4 border border-slate-800 rounded-xl bg-slate-950/30">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6 border border-border rounded-2xl bg-muted/10 shadow-inner">
                   {SOKOTO_LGAS.map((lga) => (
                     <FormField
                       key={lga}
                       control={form.control}
                       name="targetLgas"
                       render={({ field }) => {
+                        const isChecked = field.value?.includes(lga);
                         return (
                           <FormItem
                             key={lga}
-                            className="flex flex-row items-start space-x-3 space-y-0"
+                            className={cn(
+                                "flex flex-row items-center space-x-3 space-y-0 p-2.5 rounded-xl border transition-all cursor-pointer",
+                                isChecked ? "bg-primary/5 border-primary/20" : "bg-background border-transparent hover:border-border"
+                            )}
                           >
                             <FormControl>
                               <Checkbox
-                                checked={field.value?.includes(lga)}
+                                checked={isChecked}
                                 onCheckedChange={(checked) => {
                                   return checked
                                     ? field.onChange([...field.value, lga])
@@ -177,9 +190,10 @@ export function AlertForm() {
                                         )
                                       )
                                 }}
+                                className="rounded-md h-5 w-5 border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                               />
                             </FormControl>
-                            <FormLabel className="text-sm font-normal text-slate-400 cursor-pointer">
+                            <FormLabel className="text-xs font-black text-foreground/70 uppercase tracking-tight cursor-pointer flex-1">
                               {lga}
                             </FormLabel>
                           </FormItem>
@@ -188,23 +202,28 @@ export function AlertForm() {
                     />
                   ))}
                 </div>
-                <FormMessage />
+                <FormMessage className="text-[10px] font-bold" />
               </FormItem>
             )}
           />
         </div>
 
-        <div className="flex justify-end gap-3 pt-6 border-t border-slate-800">
+        <div className="flex justify-end items-center gap-4 pt-8 border-t border-border">
           <Button 
             type="button" 
             variant="ghost" 
             onClick={() => router.back()}
             disabled={isPending}
+            className="h-12 px-8 font-black uppercase tracking-widest text-[10px] rounded-xl hover:bg-muted"
           >
-            Cancel
+            Cancel Broadcast
           </Button>
-          <Button type="submit" disabled={isPending} className="bg-teal-600 hover:bg-teal-500 text-white">
-            {isPending ? "Broadcasting..." : "Issue Broadcast Alert"}
+          <Button 
+            type="submit" 
+            disabled={isPending} 
+            className="h-12 px-8 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest text-[10px] rounded-xl shadow-lg shadow-primary/20 transition-all gap-2"
+          >
+            {isPending ? "Communicating..." : "Issue Regional Broadcast Alert"}
           </Button>
         </div>
       </form>

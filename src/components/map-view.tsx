@@ -31,9 +31,9 @@ export default function MapView({ data }: MapViewProps) {
     <MapContainer 
       center={center} 
       zoom={8} 
-      style={{ height: "100%", width: "100%", borderRadius: "0.75rem" }}
+      style={{ height: "100%", width: "100%", borderRadius: "1.5rem" }}
       scrollWheelZoom={false}
-      className="z-0"
+      className="z-0 shadow-inner border border-border/50"
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -47,22 +47,32 @@ export default function MapView({ data }: MapViewProps) {
           <CircleMarker
             key={group.lga}
             center={coords}
-            radius={10 + (group.count * 2)} // Scaled by count
+            radius={12 + (group.count * 2)} // Scaled by count
             pathOptions={{ 
               fillColor: SEVERITY_COLORS[group.highestSeverity] || "#3388ff",
               color: "white",
-              weight: 2,
-              fillOpacity: 0.7 
+              weight: 3,
+              fillOpacity: 0.8,
+              className: "drop-shadow-md"
             }}
           >
             <Popup className="custom-popup">
-              <div className="p-1">
-                <h3 className="font-bold text-slate-900 mb-1 border-b pb-1">{group.lga} LGA</h3>
-                <div className="space-y-1 text-xs">
-                  <p><span className="font-semibold text-blue-600">Incidents:</span> {group.count}</p>
-                  <p><span className="font-semibold text-red-600">Casualties:</span> {group.totalCasualties}</p>
-                  <p><span className="font-semibold text-orange-600">Displaced:</span> {group.totalDisplaced}</p>
-                  <p className="mt-2 text-[10px] uppercase font-black text-slate-500">Highest Alert: {group.highestSeverity}</p>
+              <div className="p-2 min-w-[160px]">
+                <h3 className="text-xs font-black text-foreground uppercase tracking-widest mb-2 border-b border-border pb-2">{group.lga} LGA</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center bg-primary/5 px-2 py-1 rounded-lg border border-primary/10">
+                    <span className="text-[10px] font-black text-primary uppercase tracking-tighter">Incidents</span>
+                    <span className="text-xs font-black text-foreground">{group.count}</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-destructive/5 px-2 py-1 rounded-lg border border-destructive/10">
+                    <span className="text-[10px] font-black text-destructive uppercase tracking-tighter">Casualties</span>
+                    <span className="text-xs font-black text-foreground">{group.totalCasualties}</span>
+                  </div>
+                  <div className="flex justify-between items-center bg-orange-50 px-2 py-1 rounded-lg border border-orange-100">
+                    <span className="text-[10px] font-black text-orange-600 uppercase tracking-tighter">Displaced</span>
+                    <span className="text-xs font-black text-foreground">{group.totalDisplaced}</span>
+                  </div>
+                  <p className="pt-2 text-[9px] uppercase font-black text-muted-foreground tracking-widest text-center italic">Highest: {group.highestSeverity}</p>
                 </div>
               </div>
             </Popup>

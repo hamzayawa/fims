@@ -44,12 +44,12 @@ export function RoleSelector({ userId, currentRole }: RoleSelectorProps) {
       onValueChange={handleRoleChange}
       disabled={isPending}
     >
-      <SelectTrigger className="w-[180px] h-9 bg-slate-950/50 border-slate-800">
+      <SelectTrigger className="w-[180px] h-10 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-colors font-bold text-xs uppercase tracking-tight">
         <SelectValue placeholder="Select role" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
         {ROLES.map((role) => (
-          <SelectItem key={role.value} value={role.value}>
+          <SelectItem key={role.value} value={role.value} className="focus:bg-primary/10 focus:text-primary transition-colors py-2.5 font-bold text-xs uppercase tracking-tight">
             {role.label}
           </SelectItem>
         ))}

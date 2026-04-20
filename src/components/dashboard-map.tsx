@@ -7,10 +7,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 const MapView = dynamic(() => import("./map-view"), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-full bg-slate-800/20 rounded-xl animate-pulse flex items-center justify-center border border-slate-700/50">
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-12 h-12 rounded-full border-4 border-teal-500/30 border-t-teal-500 animate-spin" />
-        <p className="text-sm text-slate-500 font-medium">Initializing Geospatial View...</p>
+    <div className="w-full h-full bg-muted/20 rounded-[2rem] animate-pulse flex items-center justify-center border border-border/50 shadow-inner">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-14 h-14 rounded-full border-4 border-primary/10 border-t-primary animate-spin" />
+        <p className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em] italic opacity-60">Initializing Geospatial Analysis...</p>
       </div>
     </div>
   ),

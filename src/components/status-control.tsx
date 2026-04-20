@@ -33,19 +33,19 @@ export function StatusControl({ incidentId, currentStatus }: StatusControlProps)
   }
 
   return (
-    <div className="space-y-2">
-      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Update Phase</label>
+    <div className="space-y-3">
+      <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Critical Response Phase</label>
       <Select 
         defaultValue={currentStatus} 
         onValueChange={handleStatusChange}
         disabled={isPending}
       >
-        <SelectTrigger className="w-full bg-slate-950/50 border-slate-800 h-10">
-          <SelectValue placeholder="Update status" />
+        <SelectTrigger className="w-full bg-background border-border h-11 rounded-xl shadow-sm hover:border-primary/50 transition-colors font-bold text-foreground">
+          <SelectValue placeholder="Update phase" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
           {INCIDENT_STATUS.map((status) => (
-            <SelectItem key={status} value={status}>
+            <SelectItem key={status} value={status} className="focus:bg-primary/10 focus:text-primary transition-colors py-2.5 font-bold text-xs uppercase tracking-tight">
               {status.charAt(0) + status.slice(1).toLowerCase().replace("_", " ")}
             </SelectItem>
           ))}

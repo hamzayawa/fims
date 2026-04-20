@@ -16,64 +16,64 @@ export default async function AlertsAndNotices() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white mb-2">Alerts & Notices</h2>
-          <p className="text-slate-400">View and broadcast emergency flood alerts across the state.</p>
+          <h2 className="text-3xl font-black tracking-tighter text-foreground mb-1 uppercase">Alerts & Notices</h2>
+          <p className="text-muted-foreground text-sm font-medium">View and broadcast emergency flood alerts across the state.</p>
         </div>
-        <Button asChild className="bg-teal-600 hover:bg-teal-500 gap-2">
+        <Button asChild className="bg-primary hover:bg-primary/90 text-white font-bold h-11 px-6 rounded-xl shadow-lg shadow-primary/20 transition-all gap-2">
           <Link href="/alerts/new">
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
             Issue Alert
           </Link>
         </Button>
       </div>
 
-      <Card className="bg-slate-900/50 border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Bell className="h-4 w-4 text-red-500" />
-            Active Broadcasts
+      <Card className="bg-card border-border shadow-md overflow-hidden">
+        <CardHeader className="border-b border-border bg-muted/5 py-5">
+          <CardTitle className="text-xs font-bold text-muted-foreground flex items-center gap-2 uppercase tracking-widest pl-1">
+            <Bell className="h-4 w-4 text-destructive" />
+            Active Regional Broadcasts
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {allAlerts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 border border-dashed border-slate-700 rounded-lg bg-slate-950/50">
-              <AlertCircle className="h-12 w-12 text-slate-700 mb-4" />
-              <h3 className="text-lg font-medium text-slate-300 mb-2">No active alerts</h3>
-              <p className="text-sm max-w-sm">Use the "Issue Alert" button to broadcast critical safety information to the system.</p>
+            <div className="flex flex-col items-center justify-center p-16 text-center text-muted-foreground border-2 border-dashed border-border rounded-2xl bg-muted/20">
+              <AlertCircle className="h-14 w-14 text-muted-foreground/30 mb-4" />
+              <h3 className="text-xl font-black text-foreground mb-2 uppercase">No active alerts</h3>
+              <p className="text-sm max-w-sm font-medium">Use the "Issue Alert" button to broadcast critical safety information to the system.</p>
             </div>
           ) : (
             <div className="space-y-4">
               {allAlerts.map((alert) => (
                 <div 
                   key={alert.id} 
-                  className={`p-5 rounded-xl border transition-all ${
+                  className={`p-6 rounded-2xl border transition-all ${
                     alert.isActive 
-                      ? "bg-slate-800/40 border-slate-700" 
-                      : "bg-slate-900/20 border-slate-800 opacity-60"
+                      ? "bg-background border-border shadow-sm hover:shadow-md" 
+                      : "bg-muted/40 border-border/50 opacity-60"
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Badge variant={alert.severity === "CRITICAL" ? "destructive" : "secondary"} className="uppercase text-[10px]">
+                  <div className="flex items-start justify-between gap-6">
+                    <div className="space-y-2 flex-1">
+                      <div className="flex items-center gap-3">
+                        <Badge variant={alert.severity === "CRITICAL" ? "destructive" : "secondary"} className="uppercase text-[9px] font-black px-2 pb-0.5 rounded-md shadow-sm">
                           {alert.severity}
                         </Badge>
-                        <h4 className="font-bold text-slate-100">{alert.title}</h4>
+                        <h4 className="text-lg font-black text-foreground tracking-tight">{alert.title}</h4>
                       </div>
-                      <p className="text-sm text-slate-400 line-clamp-2 leading-relaxed">{alert.message}</p>
-                      <div className="flex flex-wrap gap-1.5 mt-3">
+                      <p className="text-sm text-muted-foreground font-medium line-clamp-2 leading-relaxed">{alert.message}</p>
+                      <div className="flex flex-wrap gap-1.5 mt-4">
                         {alert.targetLgas.map(lga => (
-                          <span key={lga} className="text-[10px] bg-slate-700/50 text-slate-300 px-2 py-0.5 rounded-full border border-slate-700/50">
+                          <span key={lga} className="text-[10px] bg-muted text-muted-foreground px-2.5 py-1 rounded-lg border border-border font-bold uppercase tracking-wider">
                             {lga}
                           </span>
                         ))}
                       </div>
                     </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-[10px] font-medium text-slate-500 uppercase">Issued On</p>
-                      <p className="text-xs text-slate-300">{new Date(alert.createdAt).toLocaleDateString()}</p>
+                    <div className="text-right shrink-0 py-1">
+                      <p className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-widest">Broadcast Date</p>
+                      <p className="text-sm text-foreground font-black tracking-tighter">{new Date(alert.createdAt).toLocaleDateString()}</p>
                       {!alert.isActive && (
-                        <Badge variant="outline" className="mt-2 text-[10px] text-slate-500 border-slate-700">INACTIVE</Badge>
+                        <Badge variant="outline" className="mt-3 text-[10px] text-muted-foreground font-black border-border uppercase">INACTIVE</Badge>
                       )}
                     </div>
                   </div>

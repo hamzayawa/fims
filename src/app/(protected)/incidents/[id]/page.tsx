@@ -65,20 +65,20 @@ export default async function IncidentDetailPage({
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild className="rounded-full">
+        <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-accent border border-transparent hover:border-border transition-all">
           <Link href="/incidents">
             <ChevronLeft className="h-5 w-5" />
           </Link>
         </Button>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white mb-1">{incident.title}</h2>
-          <div className="flex items-center gap-3 text-slate-400 text-sm">
-            <span className="flex items-center gap-1.5">
+          <h2 className="text-3xl font-black tracking-tighter text-foreground mb-1 uppercase">{incident.title}</h2>
+          <div className="flex items-center gap-4 text-muted-foreground text-xs font-bold">
+            <span className="flex items-center gap-1.5 uppercase tracking-wider">
               <Calendar className="w-3.5 h-3.5" />
               {new Date(incident.createdAt).toLocaleDateString()}
             </span>
-            <span>•</span>
-            <span className="flex items-center gap-1.5 uppercase font-semibold text-[10px] tracking-widest text-teal-500">
+            <span className="text-border">|</span>
+            <span className="flex items-center gap-1.5 uppercase font-black tracking-widest text-primary bg-primary/5 px-2 py-0.5 rounded-md border border-primary/10 shadow-sm">
               Ref: {incident.id.slice(0, 8)}
             </span>
           </div>
@@ -88,58 +88,60 @@ export default async function IncidentDetailPage({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Main Details Column */}
         <div className="lg:col-span-2 space-y-6">
-          <Card className="bg-slate-900/50 border-slate-800 border-l-4 border-l-blue-500 shadow-xl overflow-hidden">
-            <CardHeader className="bg-slate-950/30 border-b border-slate-800">
+          <Card className="bg-card border-border border-l-4 border-l-primary shadow-lg overflow-hidden">
+            <CardHeader className="bg-muted/10 border-b border-border py-6">
               <div className="flex items-center justify-between">
-                <CardTitle className="text-lg flex items-center gap-2 text-slate-200">
-                  <AlertTriangle className="w-4 h-4 text-orange-500" />
+                <CardTitle className="text-xl font-black flex items-center gap-2 text-foreground uppercase tracking-tight">
+                  <AlertTriangle className="w-5 h-5 text-orange-500" />
                   Situation Report
                 </CardTitle>
-                <Badge variant={incident.severity === "CRITICAL" ? "destructive" : "secondary"}>
+                <Badge variant={incident.severity === "CRITICAL" ? "destructive" : "secondary"} className="font-black px-3 py-1 rounded-lg uppercase tracking-widest text-[10px]">
                   {incident.severity} SEVERITY
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="pt-6 space-y-6">
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
+            <CardContent className="pt-8 space-y-8">
+              <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="p-2.5 bg-primary/10 rounded-2xl border border-primary/20 text-primary">
+                    <MapPin className="w-6 h-6 shrink-0" />
+                  </div>
                   <div>
-                    <p className="font-semibold text-slate-200">{incident.lga} LGA</p>
-                    <p className="text-slate-400 text-sm">{incident.locationDetails || "No specific street details provided."}</p>
+                    <p className="text-lg font-black text-foreground tracking-tight">{incident.lga} LGA</p>
+                    <p className="text-muted-foreground text-sm font-medium italic opacity-80">{incident.locationDetails || "No specific street details provided."}</p>
                   </div>
                 </div>
 
-                <div className="bg-slate-950/50 p-4 rounded-xl border border-slate-800">
-                  <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{incident.description}</p>
+                <div className="bg-muted/30 p-6 rounded-2xl border border-border/50 shadow-inner">
+                  <p className="text-foreground/80 leading-relaxed font-medium whitespace-pre-wrap">{incident.description}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl bg-red-500/5 border border-red-500/10 flex flex-col items-center justify-center text-center">
-                  <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-1">Casualties</span>
-                  <span className="text-2xl font-black text-red-400">{incident.casualties}</span>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="p-6 rounded-2xl bg-destructive/[0.03] border border-destructive/10 flex flex-col items-center justify-center text-center shadow-sm">
+                  <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest mb-2">Casualties Recorded</span>
+                  <span className="text-4xl font-black text-destructive tracking-tighter">{incident.casualties}</span>
                 </div>
-                <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/10 flex flex-col items-center justify-center text-center">
-                  <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest mb-1">Displaced</span>
-                  <span className="text-2xl font-black text-blue-400">{incident.displacedPersons}</span>
+                <div className="p-6 rounded-2xl bg-primary/[0.03] border border-primary/10 flex flex-col items-center justify-center text-center shadow-sm">
+                  <span className="text-muted-foreground text-[10px] font-black uppercase tracking-widest mb-2">Displaced Persons</span>
+                  <span className="text-4xl font-black text-primary tracking-tighter">{incident.displacedPersons}</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-900/50 border-slate-800">
-            <CardHeader>
-              <CardTitle className="text-sm font-medium text-slate-400">Reporter Information</CardTitle>
+          <Card className="bg-card border-border shadow-md">
+            <CardHeader className="py-4 border-b border-border/10">
+              <CardTitle className="text-[10px] font-black text-muted-foreground uppercase tracking-widest pl-1">Reporter Information</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="py-5">
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center border border-slate-700">
-                   <UserIcon className="w-5 h-5 text-slate-400" />
+                <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center border border-border shadow-sm">
+                   <UserIcon className="w-6 h-6 text-muted-foreground" />
                 </div>
                 <div>
-                  <p className="font-medium text-slate-200">{reporter?.name || "Unknown User"}</p>
-                  <p className="text-xs text-slate-500 font-mono">{reporter?.email}</p>
+                  <p className="font-black text-foreground tracking-tight">{reporter?.name || "Unknown User"}</p>
+                  <p className="text-xs text-muted-foreground font-bold tracking-tight opacity-70">{reporter?.email}</p>
                 </div>
               </div>
             </CardContent>
@@ -148,15 +150,15 @@ export default async function IncidentDetailPage({
 
         {/* Management Sidebar */}
         <div className="space-y-6">
-          <Card className="bg-slate-900 border-slate-800 shadow-2xl relative overflow-hidden">
-             <div className="absolute top-0 right-0 p-3">
-               <Droplet className="w-24 h-24 text-slate-800 opacity-20 -mr-8 -mt-8 rotate-12" />
+          <Card className="bg-card border-border shadow-xl relative overflow-hidden group">
+             <div className="absolute top-0 right-0 p-3 pointer-events-none transition-transform group-hover:scale-110 duration-500">
+               <Droplet className="w-24 h-24 text-primary opacity-5 -mr-8 -mt-8 rotate-12" />
              </div>
-            <CardHeader className="border-b border-slate-800">
-               <CardTitle className="text-sm font-bold text-slate-100 uppercase tracking-widest">Lifecycle Management</CardTitle>
-               <CardDescription>Update investigation phase and assignments.</CardDescription>
+            <CardHeader className="border-b border-border bg-muted/5 py-6">
+               <CardTitle className="text-xs font-black text-foreground uppercase tracking-widest">Lifecycle Management</CardTitle>
+               <CardDescription className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mt-1.5 italic">Update investigation phase and assignments.</CardDescription>
             </CardHeader>
-            <CardContent className="pt-6 space-y-8 relative z-10">
+            <CardContent className="pt-8 space-y-10 relative z-10">
                <StatusControl incidentId={incident.id} currentStatus={incident.status} />
                
                <AssignPersonnel 
@@ -165,20 +167,22 @@ export default async function IncidentDetailPage({
                 personnel={eligiblePersonnel.map(p => ({ id: p.id, name: p.name, role: p.role }))} 
                />
 
-               <div className="pt-6 border-t border-slate-800">
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Current Lead</p>
+               <div className="pt-8 border-t border-border">
+                  <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-4 px-1">Current Lead Responder</p>
                   {assignee ? (
-                    <div className="flex items-center gap-3 p-3 rounded-lg bg-teal-500/10 border border-teal-500/20">
-                      <div className="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center border border-teal-500/30">
-                        <Users className="w-4 h-4 text-teal-400" />
+                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-100 shadow-sm transition-all hover:shadow-md">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-200 flex items-center justify-center border border-emerald-300/50">
+                        <Users className="w-5 h-5 text-emerald-700" />
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-teal-100">{assignee.name}</p>
-                        <p className="text-[10px] text-teal-500 uppercase font-black uppercase tracking-widest">{assignee.role.replace("_", " ")}</p>
+                        <p className="text-sm font-black text-emerald-900 tracking-tight">{assignee.name}</p>
+                        <p className="text-[10px] text-emerald-600 font-black uppercase tracking-widest mt-0.5">{assignee.role.replace("_", " ")}</p>
                       </div>
                     </div>
                   ) : (
-                    <p className="text-sm text-slate-600 italic">No responder assigned yet.</p>
+                    <div className="p-4 rounded-2xl border-2 border-dashed border-border bg-muted/20 flex items-center justify-center">
+                       <p className="text-xs text-muted-foreground font-bold italic">No responder assigned yet.</p>
+                    </div>
                   )}
                </div>
             </CardContent>

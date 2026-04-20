@@ -15,55 +15,58 @@ export default async function IncidentsRegistry() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white mb-2">Incident Registry</h2>
-          <p className="text-slate-400">Manage and view flood incidents across different LGAs.</p>
+          <h2 className="text-3xl font-black tracking-tighter text-foreground mb-1 uppercase">Incident Registry</h2>
+          <p className="text-muted-foreground text-sm font-medium">Manage and view flood incidents across different LGAs.</p>
         </div>
-        <Button asChild className="gap-2">
+        <Button asChild className="gap-2 bg-primary hover:bg-primary/90 text-white font-bold h-11 px-6 rounded-xl shadow-lg shadow-primary/20 transition-all">
           <Link href="/incidents/new">
-            <Plus className="h-4 w-4" />
+            <Plus className="h-5 w-5" />
             Report Incident
           </Link>
         </Button>
       </div>
 
-      <Card className="bg-slate-900/50 border-slate-800">
-        <CardHeader>
-          <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Database className="h-4 w-4 text-blue-400" />
-            Incidents Management
+      <Card className="bg-card border-border shadow-md">
+        <CardHeader className="border-b border-border bg-muted/5 py-5">
+          <CardTitle className="text-xs font-bold text-muted-foreground flex items-center gap-2 uppercase tracking-widest pl-1">
+            <Database className="h-4 w-4 text-primary" />
+            Incidents Management Database
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           {allIncidents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-12 text-center text-slate-500 border border-dashed border-slate-700 rounded-lg bg-slate-950/50">
-              <Database className="h-12 w-12 text-slate-700 mb-4" />
-              <h3 className="text-lg font-medium text-slate-300 mb-2">No incidents yet</h3>
-              <p className="text-sm max-w-sm">Use the "Report Incident" button to start logging flood events across Sokoto State.</p>
+            <div className="flex flex-col items-center justify-center p-16 text-center text-muted-foreground border-2 border-dashed border-border rounded-2xl bg-muted/20">
+              <Database className="h-14 w-14 text-muted-foreground/30 mb-4" />
+              <h3 className="text-xl font-black text-foreground mb-2 uppercase">No incidents yet</h3>
+              <p className="text-sm max-w-sm font-medium">Use the "Report Incident" button to start logging flood events across Sokoto State.</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {allIncidents.map((incident) => (
                 <Link 
                   key={incident.id} 
                   href={`/incidents/${incident.id}`}
-                  className="p-4 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-slate-500 hover:bg-slate-800 transition-all flex items-center justify-between group"
+                  className="p-5 rounded-2xl bg-background border border-border hover:border-primary/50 hover:bg-primary/[0.02] shadow-sm hover:shadow-md transition-all flex items-center justify-between group"
                 >
-                  <div>
-                    <h4 className="font-semibold text-slate-100 group-hover:text-teal-400 transition-colors">{incident.title}</h4>
-                    <p className="text-sm text-slate-400">{incident.lga} - {incident.locationDetails}</p>
+                  <div className="space-y-1">
+                    <h4 className="text-lg font-black text-foreground group-hover:text-primary transition-colors tracking-tight">{incident.title}</h4>
+                    <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">{incident.lga} <span className="mx-1 text-border">•</span> {incident.locationDetails}</p>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase tracking-wider ${
-                      incident.severity === "CRITICAL" ? "bg-red-500/20 text-red-400 border border-red-500/30" :
-                      incident.severity === "HIGH" ? "bg-orange-500/20 text-orange-400 border border-orange-500/30" :
-                      incident.severity === "MODERATE" ? "bg-yellow-500/20 text-yellow-500 border border-yellow-500/30" :
-                      "bg-blue-500/20 text-blue-400 border border-blue-500/30"
+                  <div className="flex items-center gap-6">
+                    <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-colors ${
+                      incident.severity === "CRITICAL" ? "bg-red-50 text-red-600 border-red-200" :
+                      incident.severity === "HIGH" ? "bg-orange-50 text-orange-600 border-orange-200" :
+                      incident.severity === "MODERATE" ? "bg-yellow-50 text-yellow-600 border-yellow-200" :
+                      "bg-blue-50 text-blue-600 border-blue-200"
                     }`}>
                       {incident.severity}
                     </span>
-                    <span className="text-xs text-slate-500">
-                      {new Date(incident.createdAt).toLocaleDateString()}
-                    </span>
+                    <div className="text-right">
+                        <p className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-widest">Reported</p>
+                        <p className="text-xs text-muted-foreground font-bold italic">
+                        {new Date(incident.createdAt).toLocaleDateString()}
+                        </p>
+                    </div>
                   </div>
                 </Link>
               ))}

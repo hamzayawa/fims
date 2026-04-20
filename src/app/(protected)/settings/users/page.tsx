@@ -33,44 +33,44 @@ export default async function PersonnelManagement() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white mb-2">Personnel Management</h2>
-          <p className="text-slate-400">Manage access levels and roles for all system users.</p>
+          <h2 className="text-3xl font-black tracking-tighter text-foreground mb-1 uppercase tracking-wider">Personnel Management</h2>
+          <p className="text-muted-foreground text-sm font-medium">Manage access levels and roles for all system users.</p>
         </div>
-        <Badge variant="outline" className="gap-1.5 px-3 py-1 border-teal-500/30 text-teal-400 bg-teal-500/5">
+        <Badge variant="outline" className="gap-2 px-4 py-1.5 border-emerald-200 text-emerald-700 bg-emerald-50 rounded-full font-black text-[10px] uppercase tracking-widest shadow-sm">
           <ShieldCheck className="w-3.5 h-3.5" />
           Admin Access Active
         </Badge>
       </div>
 
-      <Card className="bg-slate-900/50 border-slate-800 border-t-teal-500/50">
-        <CardHeader>
-          <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
-            <Users className="h-4 w-4 text-teal-400" />
-            Registered Personnel
+      <Card className="bg-card border-border border-t-4 border-t-primary shadow-xl overflow-hidden">
+        <CardHeader className="bg-muted/5 border-b border-border py-6">
+          <CardTitle className="text-xs font-black text-muted-foreground flex items-center gap-2 uppercase tracking-widest pl-1">
+            <Users className="h-4 w-4 text-primary" />
+            Registered Personnel Database
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="rounded-md border border-slate-800">
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
             <Table>
-              <TableHeader className="bg-slate-950/50">
-                <TableRow className="border-slate-800 hover:bg-transparent">
-                  <TableHead className="text-slate-400">Name</TableHead>
-                  <TableHead className="text-slate-400">Email</TableHead>
-                  <TableHead className="text-slate-400">Current Role</TableHead>
-                  <TableHead className="text-right text-slate-400">Access Control</TableHead>
+              <TableHeader className="bg-muted/30">
+                <TableRow className="border-border hover:bg-transparent">
+                  <TableHead className="text-muted-foreground font-black text-[10px] uppercase tracking-widest px-6 py-5">Name</TableHead>
+                  <TableHead className="text-muted-foreground font-black text-[10px] uppercase tracking-widest px-6 py-5">Email Address</TableHead>
+                  <TableHead className="text-muted-foreground font-black text-[10px] uppercase tracking-widest px-6 py-5">System Role</TableHead>
+                  <TableHead className="text-right text-muted-foreground font-black text-[10px] uppercase tracking-widest px-6 py-5">Access Management</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {allUsers.map((u) => (
-                  <TableRow key={u.id} className="border-slate-800 hover:bg-slate-800/30 transition-colors">
-                    <TableCell className="font-medium text-slate-200">{u.name}</TableCell>
-                    <TableCell className="text-slate-400">{u.email}</TableCell>
-                    <TableCell>
-                       <Badge variant="secondary" className="font-mono text-[10px] tracking-wider">
-                         {u.role}
+                  <TableRow key={u.id} className="border-border hover:bg-primary/[0.02] transition-all">
+                    <TableCell className="px-6 py-6 font-black text-foreground tracking-tight text-base">{u.name}</TableCell>
+                    <TableCell className="px-6 py-6 text-muted-foreground font-medium text-sm italic">{u.email}</TableCell>
+                    <TableCell className="px-6 py-6">
+                       <Badge variant="secondary" className="font-black text-[9px] tracking-widest uppercase px-2.5 py-1 rounded-md shadow-sm">
+                         {u.role.replace("_", " ")}
                        </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="px-6 py-6 text-right">
                        <RoleSelector userId={u.id} currentRole={u.role} />
                     </TableCell>
                   </TableRow>

@@ -74,33 +74,33 @@ export default function RegisterPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-xl shadow-2xl shadow-teal-900/20 text-slate-100">
-        <CardHeader className="space-y-3 pb-6">
-          <div className="mx-auto bg-teal-500/10 p-3 rounded-2xl border border-teal-500/20 mb-2">
-            <Droplet className="w-8 h-8 text-teal-400" />
+      <Card className="border-border bg-background/80 backdrop-blur-xl shadow-2xl shadow-blue-500/10 text-foreground">
+        <CardHeader className="space-y-4 pb-8">
+          <div className="mx-auto bg-primary/10 p-4 rounded-3xl border border-primary/20 mb-2">
+            <Droplet className="w-10 h-10 text-primary fill-primary/20" />
           </div>
-          <CardTitle className="text-2xl font-bold text-center tracking-tight">System Registration</CardTitle>
-          <CardDescription className="text-center text-slate-400">
+          <CardTitle className="text-3xl font-black text-center tracking-tight uppercase">FIMS Registration</CardTitle>
+          <CardDescription className="text-center text-muted-foreground font-semibold">
             Create an official NEMA FIMS personnel account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Full Name</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest pl-1">Full Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="John Doe"
-                        className="bg-slate-800/50 border-slate-700 text-slate-100 focus-visible:ring-teal-500"
+                        className="bg-background border-border text-foreground focus-visible:ring-primary h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
@@ -110,16 +110,16 @@ export default function RegisterPage() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Official Email</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest pl-1">Official Email</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="officer@nema.gov.ng"
                         type="email"
-                        className="bg-slate-800/50 border-slate-700 text-slate-100 focus-visible:ring-teal-500"
+                        className="bg-background border-border text-foreground focus-visible:ring-primary h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
@@ -129,11 +129,11 @@ export default function RegisterPage() {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Requested Role</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest pl-1">Requested Role</FormLabel>
                     <FormControl>
                       <select 
                         {...field}
-                        className="flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border bg-slate-800/50 border-slate-700 px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-teal-500 disabled:cursor-not-allowed disabled:opacity-50 text-slate-100"
+                        className="flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl border bg-background border-border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50 text-foreground font-medium"
                       >
                         <option value="VIEWER">Viewer (Reports & Analytics)</option>
                         <option value="FIELD_AGENT">Field Agent (Ground Reporting)</option>
@@ -141,7 +141,7 @@ export default function RegisterPage() {
                         <option value="ADMIN">Administrator</option>
                       </select>
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
@@ -151,16 +151,16 @@ export default function RegisterPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Strong Password</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest pl-1">Strong Password</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="••••••••"
                         type="password"
-                        className="bg-slate-800/50 border-slate-700 text-slate-100 focus-visible:ring-teal-500"
+                        className="bg-background border-border text-foreground focus-visible:ring-primary h-11 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
@@ -168,18 +168,18 @@ export default function RegisterPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-teal-600 hover:bg-teal-500 text-white font-medium py-5 mt-4 transition-all"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 mt-4 transition-all rounded-xl shadow-lg shadow-primary/20"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Create Account"}
               </Button>
             </form>
           </Form>
 
-          <div className="mt-8 text-center text-sm text-slate-400">
+          <div className="mt-8 text-center text-sm text-muted-foreground font-semibold">
             Already registered?{" "}
             <Link
               href="/login"
-              className="text-teal-400 font-medium hover:text-teal-300 transition-colors"
+              className="text-primary font-bold hover:underline transition-all"
             >
               Sign In to FIMS
             </Link>

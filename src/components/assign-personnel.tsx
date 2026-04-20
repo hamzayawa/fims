@@ -34,23 +34,23 @@ export function AssignPersonnel({ incidentId, currentAssigneeId, personnel }: As
   }
 
   return (
-    <div className="space-y-2">
-      <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Assign Lead</label>
+    <div className="space-y-3">
+      <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Assign Lead Responder</label>
       <Select 
         defaultValue={currentAssigneeId || undefined} 
         onValueChange={handleAssignment}
         disabled={isPending}
       >
-        <SelectTrigger className="w-full bg-slate-950/50 border-slate-800 h-10">
-          <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-slate-400" />
+        <SelectTrigger className="w-full bg-background border-border h-11 rounded-xl shadow-sm hover:border-primary/50 transition-colors">
+          <div className="flex items-center gap-2.5 font-bold text-foreground">
+            <User className="w-4 h-4 text-primary" />
             <SelectValue placeholder="Select responder" />
           </div>
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-popover border-border rounded-xl shadow-xl">
           {personnel.map((p) => (
-            <SelectItem key={p.id} value={p.id}>
-              {p.name} ({p.role.replace("_", " ")})
+            <SelectItem key={p.id} value={p.id} className="focus:bg-primary/10 focus:text-primary transition-colors py-2.5">
+              <span className="font-bold">{p.name}</span> <span className="text-[10px] uppercase font-black opacity-40 ml-2 tracking-widest">[{p.role.replace("_", " ")}]</span>
             </SelectItem>
           ))}
           {personnel.length === 0 && (

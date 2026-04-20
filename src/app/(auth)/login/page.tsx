@@ -66,34 +66,34 @@ export default function LoginPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <Card className="border-slate-800 bg-slate-900/60 backdrop-blur-xl shadow-2xl shadow-blue-900/20 text-slate-100">
-        <CardHeader className="space-y-3 pb-6">
-          <div className="mx-auto bg-blue-500/10 p-3 rounded-2xl border border-blue-500/20 mb-2">
-            <Droplet className="w-8 h-8 text-blue-400" />
+      <Card className="border-border bg-background/80 backdrop-blur-xl shadow-2xl shadow-blue-500/10 text-foreground">
+        <CardHeader className="space-y-4 pb-8">
+          <div className="mx-auto bg-primary/10 p-4 rounded-3xl border border-primary/20 mb-2">
+            <Droplet className="w-10 h-10 text-primary fill-primary/20" />
           </div>
-          <CardTitle className="text-2xl font-bold text-center tracking-tight">FIMS Portal</CardTitle>
-          <CardDescription className="text-center text-slate-400">
+          <CardTitle className="text-3xl font-black text-center tracking-tight uppercase">FIMS Portal</CardTitle>
+          <CardDescription className="text-center text-muted-foreground font-semibold">
             Sign in to access the Flood Information Management System
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Email Address</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest">Email Address</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="officer@nema.gov.ng"
                         type="email"
-                        className="bg-slate-800/50 border-slate-700 text-slate-100 focus-visible:ring-blue-500"
+                        className="bg-background border-border text-foreground focus-visible:ring-primary h-12 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
@@ -102,34 +102,34 @@ export default function LoginPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-slate-300">Password</FormLabel>
+                    <FormLabel className="text-muted-foreground font-bold uppercase text-[10px] tracking-widest">Password</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="••••••••"
                         type="password"
-                        className="bg-slate-800/50 border-slate-700 text-slate-100 focus-visible:ring-blue-500"
+                        className="bg-background border-border text-foreground focus-visible:ring-primary h-12 rounded-xl"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400" />
+                    <FormMessage className="text-destructive font-semibold text-xs" />
                   </FormItem>
                 )}
               />
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-5 mt-2 transition-all"
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-12 mt-2 transition-all rounded-xl shadow-lg shadow-primary/20"
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Sign In"}
               </Button>
             </form>
           </Form>
 
-          <div className="mt-8 text-center text-sm text-slate-400">
+          <div className="mt-8 text-center text-sm text-muted-foreground font-semibold">
             Don't have an account?{" "}
             <Link
               href="/register"
-              className="text-blue-400 font-medium hover:text-blue-300 transition-colors"
+              className="text-primary font-bold hover:underline transition-all"
             >
               Request Access
             </Link>
