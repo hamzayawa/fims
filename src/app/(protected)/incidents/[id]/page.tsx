@@ -1,7 +1,9 @@
 import { db } from "@/db";
-import { incidents, user, resources, resourceDeployments } from "@/db/schema";
-import { eq, or, inArray } from "drizzle-orm";
+import { incidents, user, resources, resourceDeployments, incidentUpdates } from "@/db/schema";
+import { eq, or, inArray, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
@@ -18,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { StatusControl } from "@/components/status-control";
 import { AssignPersonnel } from "@/components/assign-personnel";
 import { ResourceManager } from "@/components/resource-manager";
+import { IncidentTimeline } from "@/components/incident-timeline";
 
 export default async function IncidentDetailPage({
   params,
@@ -61,6 +64,31 @@ export default async function IncidentDetailPage({
   const availableResources = await db.query.resources.findMany({
     where: eq(resources.status, "AVAILABLE")
   });
+
+  // 6. Fetch situational updates
+  const updatesData = await db.query.incidentUpdates.findMany({
+    where: eq(incidentUpdates.incidentId, id),
+    with: {
+      author: true,
+    },
+    orderBy: [desc(incidentUpdates.createdAt)],
+  });
+
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  const canAddUpdate = session?.user?.role !== "VIEWER";
+
+  const formattedUpdates = updatesData.map((u) => ({
+    id: u.id,
+    content: u.content,
+    createdAt: u.createdAt,
+    author: {
+      name: u.author.name,
+      role: u.author.role,
+      image: u.author.image,
+    },
+  }));
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
@@ -146,6 +174,13 @@ export default async function IncidentDetailPage({
               </div>
             </CardContent>
           </Card>
+
+          {/* Operational Timeline */}
+          <IncidentTimeline 
+            incidentId={incident.id} 
+            updates={formattedUpdates} 
+            canAddUpdate={canAddUpdate} 
+          />
         </div>
 
         {/* Management Sidebar */}

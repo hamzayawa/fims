@@ -9,6 +9,7 @@ import { DashboardMap } from "@/components/dashboard-map";
 import { getWeatherAction, getFloodRiskAction } from "@/app/actions/weather";
 import { WeatherPanel } from "@/components/weather-panel";
 import { Badge } from "@/components/ui/badge";
+import { RiskAlertBanner } from "@/components/risk-alert-banner";
 
 export default async function DashboardOverview() {
   const [incidentCount] = await db
@@ -57,6 +58,8 @@ export default async function DashboardOverview() {
         </div>
       </div>
       
+      <RiskAlertBanner assessment={risk} />
+
       {/* Top Row: Metrics */}
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-card border-border shadow-sm">

@@ -86,7 +86,6 @@ export function ResourceManager({ incidentId, currentDeployments, availableResou
   const activeDeployments = currentDeployments.filter(d => d.status === "ACTIVE");
 
   return (
-  return (
     <Card className="bg-card border-border shadow-xl relative overflow-hidden group">
       <CardHeader className="flex flex-row items-center justify-between border-b border-border bg-muted/5 py-5 px-6">
         <div>

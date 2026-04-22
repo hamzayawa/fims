@@ -1,1 +1,0 @@
-[?25l[2K[1G? Do you want to generate the schema to ./auth-schema.ts? › (y/N)

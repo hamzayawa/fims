@@ -112,6 +112,14 @@ export const resourceDeployments = pgTable("resource_deployment", {
   returnedAt: timestamp("returnedAt"),
 });
 
+export const incidentUpdates = pgTable("incident_update", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  incidentId: text("incidentId").notNull().references(() => incidents.id),
+  authorId: text("authorId").notNull().references(() => user.id),
+  content: text("content").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});
+
 // Relations
 export const userRelations = relations(user, ({ many }) => ({
   reportedIncidents: many(incidents, { relationName: "reporter" }),
@@ -130,6 +138,18 @@ export const incidentRelations = relations(incidents, ({ one, many }) => ({
     relationName: "assignee",
   }),
   deployments: many(resourceDeployments),
+  updates: many(incidentUpdates),
+}));
+
+export const incidentUpdateRelations = relations(incidentUpdates, ({ one }) => ({
+  incident: one(incidents, {
+    fields: [incidentUpdates.incidentId],
+    references: [incidents.id],
+  }),
+  author: one(user, {
+    fields: [incidentUpdates.authorId],
+    references: [user.id],
+  }),
 }));
 
 export const resourceRelations = relations(resources, ({ many }) => ({
