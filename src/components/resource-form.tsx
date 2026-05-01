@@ -47,11 +47,11 @@ export function ResourceForm() {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<FormValues>({
+  const form = useForm({
     resolver: zodResolver(resourceSchema),
     defaultValues: {
       name: "",
-      type: "BOAT",
+      type: "BOAT" as const,
       serialNumber: "",
       quantity: 1,
       currentLga: "",
@@ -138,6 +138,7 @@ export function ResourceForm() {
                     type="number" 
                     className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-black text-primary"
                     {...field} 
+                    value={field.value as any}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] font-bold" />

@@ -20,6 +20,11 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  // Check if user is active
+  if ((session.user as any).isActive === false) {
+    redirect("/login?error=account_disabled");
+  }
+
   const role = (session.user as any).role as string;
 
   return (

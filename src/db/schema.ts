@@ -11,7 +11,8 @@ export const user = pgTable("user", {
     .default("VIEWER")
     .notNull(),
   createdAt: timestamp("createdAt").notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt").notNull().defaultNow()
+  updatedAt: timestamp("updatedAt").notNull().defaultNow(),
+  isActive: boolean("isActive").default(true).notNull(),
 });
 
 export const session = pgTable("session", {
@@ -19,7 +20,7 @@ export const session = pgTable("session", {
   expiresAt: timestamp("expiresAt").notNull(),
   ipAddress: text("ipAddress"),
   userAgent: text("userAgent"),
-  userId: text("userId").notNull().references(() => user.id),
+  userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" }),
   token: text("token").notNull(),
   createdAt: timestamp("createdAt").notNull().defaultNow(),
   updatedAt: timestamp("updatedAt").notNull().defaultNow()
@@ -29,7 +30,7 @@ export const account = pgTable("account", {
   id: text("id").primaryKey(),
   accountId: text("accountId").notNull(),
   providerId: text("providerId").notNull(),
-  userId: text("userId").notNull().references(() => user.id),
+  userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" }),
   accessToken: text("accessToken"),
   refreshToken: text("refreshToken"),
   idToken: text("idToken"),
@@ -83,7 +84,7 @@ export const alerts = pgTable("alert", {
 
 export const notifications = pgTable("notification", {
   id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
-  userId: text("userId").notNull().references(() => user.id),
+  userId: text("userId").notNull().references(() => user.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   message: text("message").notNull(),
   isRead: boolean("isRead").default(false).notNull(),
@@ -167,3 +168,12 @@ export const resourceDeploymentRelations = relations(resourceDeployments, ({ one
   }),
 }));
 
+export const accessRequests = pgTable("access_request", {
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  email: text("email").notNull(),
+  organization: text("organization"),
+  purpose: text("purpose").notNull(),
+  status: text("status", { enum: ["PENDING", "APPROVED", "REJECTED"] }).default("PENDING").notNull(),
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
+});

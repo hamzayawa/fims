@@ -1,12 +1,23 @@
 import { Metadata } from "next";
 import React from "react";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Authentication | FIMS",
   description: "Login or register for the Flood Information Management System.",
 };
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  });
+
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="relative min-h-screen flex items-center justify-center p-4 overflow-hidden bg-background">
       {/* Dynamic Background */}
@@ -16,7 +27,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-10 w-full max-w-lg">
         {children}
       </div>
     </div>

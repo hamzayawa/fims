@@ -26,7 +26,8 @@ const ROLES = [
 export function RoleSelector({ userId, currentRole }: RoleSelectorProps) {
   const [isPending, setIsPending] = useState(false);
 
-  async function handleRoleChange(newRole: string) {
+  async function handleRoleChange(newRole: string | null) {
+    if (!newRole) return;
     setIsPending(true);
     const result = await updateUserRoleAction(userId, newRole as any);
     setIsPending(false);

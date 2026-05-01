@@ -118,7 +118,7 @@ export function ReportGenerator() {
 
             <div className="space-y-3">
               <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">LGA Selection</Label>
-              <Select value={lga} onValueChange={setLga}>
+              <Select value={lga} onValueChange={(val) => val && setLga(val)}>
                 <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="All LGAs" />
                 </SelectTrigger>
@@ -133,7 +133,7 @@ export function ReportGenerator() {
 
             <div className="space-y-3">
               <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Severity Threshold</Label>
-              <Select value={severity} onValueChange={setSeverity}>
+              <Select value={severity} onValueChange={(val) => val && setSeverity(val)}>
                 <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="Any Severity" />
                 </SelectTrigger>
@@ -148,7 +148,7 @@ export function ReportGenerator() {
 
             <div className="space-y-3">
               <Label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest px-1">Lifecycle Status</Label>
-              <Select value={status} onValueChange={setStatus}>
+              <Select value={status} onValueChange={(val) => val && setStatus(val)}>
                 <SelectTrigger className="h-11 bg-background border-border rounded-xl shadow-sm hover:border-primary/50 transition-all font-bold">
                   <SelectValue placeholder="Any Status" />
                 </SelectTrigger>

@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -50,14 +50,14 @@ export function IncidentForm() {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
 
-  const form = useForm<FormValues>({
+  const form = useForm({
     resolver: zodResolver(incidentSchema),
     defaultValues: {
       title: "",
       description: "",
       lga: "",
       locationDetails: "",
-      severity: "LOW",
+      severity: "LOW" as const,
       casualties: 0,
       displacedPersons: 0,
     },
@@ -196,6 +196,7 @@ export function IncidentForm() {
                     type="number" 
                     className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-black text-destructive"
                     {...field} 
+                    value={field.value as any}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] font-bold" />
@@ -214,6 +215,7 @@ export function IncidentForm() {
                     type="number" 
                     className="h-12 bg-background border-border rounded-xl shadow-sm focus:ring-primary/20 font-black text-primary"
                     {...field} 
+                    value={field.value as any}
                   />
                 </FormControl>
                 <FormMessage className="text-[10px] font-bold" />

@@ -1,6 +1,7 @@
 import { resend } from "./resend";
 import { db } from "@/db";
 import { user } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function broadcastEmail(
   subject: string, 
@@ -40,5 +41,61 @@ export async function broadcastEmail(
     });
   } catch (error) {
     console.error("Failed to broadcast email:", error);
+  }
+}
+
+export async function sendAccessRequestNotification(data: {
+  name: string;
+  email: string;
+  organization: string;
+  purpose: string;
+}) {
+  try {
+    // 1. Fetch all admin emails
+    const admins = await db.select({ email: user.email })
+      .from(user)
+      .where(eq(user.role, 'ADMIN'));
+    
+    const adminEmails = admins.map(u => u.email);
+
+    if (adminEmails.length === 0) {
+      console.warn("No admins found to notify about access request.");
+      return;
+    }
+
+    // 2. Send notification
+    await resend.emails.send({
+      from: 'FIMS Access <access@fims.sokoto.gov.ng>',
+      to: adminEmails,
+      subject: `[ACCESS REQUEST] New registration request from ${data.name}`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+          <div style="background-color: #3b82f6; color: white; padding: 24px; text-align: center;">
+            <h1 style="margin: 0; font-size: 20px;">New Access Request</h1>
+          </div>
+          <div style="padding: 24px; color: #1e293b;">
+            <p>A new user has requested access to the FIMS Portal.</p>
+            
+            <div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <p style="margin: 0 0 10px 0;"><strong>Name:</strong> ${data.name}</p>
+              <p style="margin: 0 0 10px 0;"><strong>Email:</strong> ${data.email}</p>
+              <p style="margin: 0 0 10px 0;"><strong>Organization:</strong> ${data.organization}</p>
+              <p style="margin: 0;"><strong>Purpose:</strong></p>
+              <p style="margin: 5px 0 0 0; font-style: italic;">"${data.purpose}"</p>
+            </div>
+
+            <p style="line-height: 1.6; font-size: 14px;">
+              Please log in to the FIMS Admin Panel to review and create an account for this user if approved.
+            </p>
+            
+            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b;">
+              This is an automated system notification from the FIMS Portal.
+            </div>
+          </div>
+        </div>
+      `,
+    });
+  } catch (error) {
+    console.error("Failed to send access request notification:", error);
   }
 }

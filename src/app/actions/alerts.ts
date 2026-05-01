@@ -17,7 +17,7 @@ const alertSchema = z.object({
   expiresAt: z.string().optional().transform(v => v ? new Date(v) : undefined),
 });
 
-export async function createAlertAction(values: z.infer<typeof alertSchema>) {
+export async function createAlertAction(values: z.input<typeof alertSchema>) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -62,7 +62,7 @@ export async function createAlertAction(values: z.infer<typeof alertSchema>) {
   } catch (error) {
     console.error("Failed to create alert:", error);
     if (error instanceof z.ZodError) {
-      return { error: "Validation failed", details: error.errors };
+      return { error: "Validation failed", details: error.issues };
     }
     return { error: "Something went wrong." };
   }

@@ -21,7 +21,8 @@ interface AssignPersonnelProps {
 export function AssignPersonnel({ incidentId, currentAssigneeId, personnel }: AssignPersonnelProps) {
   const [isPending, setIsPending] = useState(false);
 
-  async function handleAssignment(userId: string) {
+  async function handleAssignment(userId: string | null) {
+    if (!userId) return;
     setIsPending(true);
     const result = await assignIncidentAction(incidentId, userId);
     setIsPending(false);

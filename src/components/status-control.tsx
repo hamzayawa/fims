@@ -20,7 +20,8 @@ interface StatusControlProps {
 export function StatusControl({ incidentId, currentStatus }: StatusControlProps) {
   const [isPending, setIsPending] = useState(false);
 
-  async function handleStatusChange(newStatus: string) {
+  async function handleStatusChange(newStatus: string | null) {
+    if (!newStatus) return;
     setIsPending(true);
     const result = await updateIncidentStatusAction(incidentId, newStatus as any);
     setIsPending(false);

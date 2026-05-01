@@ -16,7 +16,7 @@ const resourceSchema = z.object({
   currentLga: z.string().optional(),
 });
 
-export async function createResourceAction(values: z.infer<typeof resourceSchema>) {
+export async function createResourceAction(values: z.input<typeof resourceSchema>) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });

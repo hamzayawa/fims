@@ -60,7 +60,7 @@ export function generatePDF(data: any) {
       ['Active Alerts', data.summary.totalAlerts.toString()],
     ],
     theme: 'grid',
-    headStyles: { fillStyle: 'fill', fillColor: [240, 240, 240], textColor: [50, 50, 50], fontStyle: 'bold' }
+    headStyles: { fillColor: [240, 240, 240], textColor: [50, 50, 50], fontStyle: 'bold' }
   });
 
   // Incidents Table

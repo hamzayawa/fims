@@ -19,7 +19,7 @@ const incidentSchema = z.object({
   displacedPersons: z.coerce.number().min(0).default(0),
 });
 
-export async function createIncidentAction(values: z.infer<typeof incidentSchema>) {
+export async function createIncidentAction(values: z.input<typeof incidentSchema>) {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -69,7 +69,7 @@ export async function createIncidentAction(values: z.infer<typeof incidentSchema
   } catch (error) {
     console.error("Failed to create incident:", error);
     if (error instanceof z.ZodError) {
-      return { error: "Validation failed", details: error.errors };
+      return { error: "Validation failed", details: error.issues };
     }
     return { error: "Something went wrong. Please try again." };
   }
@@ -151,7 +151,7 @@ export async function addIncidentUpdateAction(values: z.infer<typeof incidentUpd
   } catch (error) {
     console.error("Failed to add update:", error);
     if (error instanceof z.ZodError) {
-      return { error: "Validation failed", details: error.errors };
+      return { error: "Validation failed", details: error.issues };
     }
     return { error: "Something went wrong. Please try again." };
   }
